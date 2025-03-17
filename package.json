@@ -1,7 +1,7 @@
 {
   "name": "anthropic-proxy",
   "description": "A proxy server that transforms Anthropic API requests to OpenAI format and sends it to openrouter.ai.",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "type": "module",
   "bin": {
     "anthropic-proxy": "index.js"
