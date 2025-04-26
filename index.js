@@ -2,7 +2,9 @@
 import Fastify from 'fastify'
 import { TextDecoder } from 'util'
 
-const key = process.env.OPENROUTER_API_KEY
+const baseUrl = process.env.ANTHROPIC_PROXY_BASE_URL || 'https://openrouter.ai/api'
+const requiresApiKey = !process.env.ANTHROPIC_PROXY_BASE_URL
+const key = requiresApiKey ? process.env.OPENROUTER_API_KEY : null
 const model = 'google/gemini-2.0-pro-exp-02-05:free'
 const models = {
   reasoning: process.env.REASONING_MODEL || model,
@@ -153,12 +155,17 @@ fastify.post('/v1/messages', async (request, reply) => {
     if (tools.length > 0) openaiPayload.tools = tools
     debug('OpenAI payload:', openaiPayload)
 
-    const openaiResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+    
+    if (requiresApiKey) {
+      headers['Authorization'] = `Bearer ${key}`
+    }
+    
+    const openaiResponse = await fetch(`${baseUrl}/v1/chat/completions`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`
-      },
+      headers,
       body: JSON.stringify(openaiPayload)
     });
 

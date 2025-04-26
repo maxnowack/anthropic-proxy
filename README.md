@@ -12,12 +12,14 @@ OPENROUTER_API_KEY=your-api-key npx anthropic-proxy
 
 Environment variables:
 
-- `OPENROUTER_API_KEY`: Your OpenRouter API key
+- `OPENROUTER_API_KEY`: Your OpenRouter API key (required when using OpenRouter)
+- `ANTHROPIC_PROXY_BASE_URL`: Custom base URL for the transformed OpenAI-format message (default: `openrouter.ai`)
 - `PORT`: The port the proxy server should listen on (default: 3000)
 - `REASONING_MODEL`: The reasoning model to use (default: `google/gemini-2.0-pro-exp-02-05:free`)
 - `COMPLETION_MODEL`: The completion model to use (default: `google/gemini-2.0-pro-exp-02-05:free`)
 - `DEBUG`: Set to `1` to enable debug logging
 
+Note: When `ANTHROPIC_PROXY_BASE_URL` is set to a custom URL, the `OPENROUTER_API_KEY` is not required.
 
 ## Claude Code
 
